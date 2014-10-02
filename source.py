@@ -814,6 +814,7 @@ class XMLTVSource(Source):
     FTV_USUKBASIC = 'guide_usukbasic.xmltv'
     FTV_URL = 'http://remoteman.tv/ftv/'
     KEY = 'xmltv'
+    INI_FILE = 'addons.ini'
     TYPE_FTV_ALL = 0
     TYPE_FTV_BASIC = 1
     TYPE_FTV_UKBASIC = 2
@@ -842,6 +843,9 @@ class XMLTVSource(Source):
             self.xmltvFile = self.updateLocalFile(XMLTVSource.FTV_USTV)
         elif (self.xmltvType == XMLTVSource.TYPE_FTV_USUKBASIC):
             self.xmltvFile = self.updateLocalFile(XMLTVSource.FTV_USUKBASIC)
+
+        # make sure the ini file is fetched as well if necessary
+        self.updateLocalFile(XMLTVSource.INI_FILE)
 
         if not self.xmltvFile or not xbmcvfs.exists(self.xmltvFile):
             raise SourceNotConfiguredException()
