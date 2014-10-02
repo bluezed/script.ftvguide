@@ -62,6 +62,7 @@ CHANNELS_PER_PAGE = 8
 
 HALF_HOUR = datetime.timedelta(minutes=30)
 
+SKIN = ADDON.getSetting('skin')
 
 def debug(s):
     if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
@@ -117,7 +118,7 @@ class TVGuide(xbmcgui.WindowXML):
     C_MAIN_OSD_CHANNEL_TITLE = 6005
 
     def __new__(cls):
-        return super(TVGuide, cls).__new__(cls, 'script-tvguide-main.xml', ADDON.getAddonInfo('path'))
+        return super(TVGuide, cls).__new__(cls, 'script-tvguide-main.xml', ADDON.getAddonInfo('path'), SKIN)
 
     def __init__(self):
         super(TVGuide, self).__init__()
@@ -951,7 +952,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
     C_POPUP_PROGRAM_TITLE = 4102
 
     def __new__(cls, database, program, showRemind):
-        return super(PopupMenu, cls).__new__(cls, 'script-tvguide-menu.xml', ADDON.getAddonInfo('path'))
+        return super(PopupMenu, cls).__new__(cls, 'script-tvguide-menu.xml', ADDON.getAddonInfo('path'), SKIN)
 
     def __init__(self, database, program, showRemind):
         """
@@ -1034,7 +1035,7 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
     C_CHANNELS_CANCEL = 6004
 
     def __new__(cls, database):
-        return super(ChannelsMenu, cls).__new__(cls, 'script-tvguide-channels.xml', ADDON.getAddonInfo('path'))
+        return super(ChannelsMenu, cls).__new__(cls, 'script-tvguide-channels.xml', ADDON.getAddonInfo('path'), SKIN)
 
     def __init__(self, database):
         """
@@ -1180,7 +1181,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
     VISIBLE_ADDONS = 'addons'
 
     def __new__(cls, database, channel):
-        return super(StreamSetupDialog, cls).__new__(cls, 'script-tvguide-streamsetup.xml', ADDON.getAddonInfo('path'))
+        return super(StreamSetupDialog, cls).__new__(cls, 'script-tvguide-streamsetup.xml', ADDON.getAddonInfo('path'), SKIN)
 
     def __init__(self, database, channel):
         """
@@ -1337,8 +1338,7 @@ class ChooseStreamAddonDialog(xbmcgui.WindowXMLDialog):
     C_SELECTION_LIST = 1000
 
     def __new__(cls, addons):
-        return super(ChooseStreamAddonDialog, cls).__new__(cls, 'script-tvguide-streamaddon.xml',
-                                                           ADDON.getAddonInfo('path'))
+        return super(ChooseStreamAddonDialog, cls).__new__(cls, 'script-tvguide-streamaddon.xml', ADDON.getAddonInfo('path'), SKIN)
 
     def __init__(self, addons):
         super(ChooseStreamAddonDialog, self).__init__()
