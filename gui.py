@@ -87,6 +87,7 @@ class ControlAndProgram(object):
 
 
 class TVGuide(xbmcgui.WindowXML):
+    C_MAIN_DATE_LONG = 3999
     C_MAIN_DATE = 4000
     C_MAIN_TITLE = 4020
     C_MAIN_TIME = 4021
@@ -624,7 +625,8 @@ class TVGuide(xbmcgui.WindowXML):
         channelsWithoutPrograms = list(channels)
 
         # date and time row
-        self.setControlLabel(self.C_MAIN_DATE, self.formatDate(self.viewStartDate))
+        self.setControlLabel(self.C_MAIN_DATE, self.formatDate(self.viewStartDate, False))
+        self.setControlLabel(self.C_MAIN_DATE_LONG, self.formatDate(self.viewStartDate, True))
         for col in range(1, 5):
             self.setControlLabel(4000 + col, self.formatTime(startTime))
             startTime += HALF_HOUR
@@ -892,9 +894,12 @@ class TVGuide(xbmcgui.WindowXML):
         else:
             return ''
 
-    def formatDate(self, timestamp):
+    def formatDate(self, timestamp, longdate=False):
         if timestamp:
-            format = xbmc.getRegion('dateshort')
+            if longdate == True:
+                format = xbmc.getRegion('datelong')
+            else:
+                format = xbmc.getRegion('dateshort')
             return timestamp.strftime(format)
         else:
             return ''
