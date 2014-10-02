@@ -188,7 +188,35 @@ msgctxt "#30132"
 msgid "alle 48 Std."
 msgstr ""
 
-#empty strings from id 30133 to 30149
+msgctxt "#30133"
+msgid "UK (Freeview)"
+msgstr "UK (Freeview)"
+
+msgctxt "#30134"
+msgid "UK (Sky Go)"
+msgstr "UK (Sky Go)"
+
+msgctxt "#30135"
+msgid "USTVNow"
+msgstr "USTVNow"
+
+msgctxt "#30136"
+msgid "US/UK (Basic)"
+msgstr "US/UK (Basic)"
+
+msgctxt "#30137"
+msgid "** WARNING! ** Resetting your database will cause you to lose all settings!"
+msgstr "** WARNUNG! ** Durch Zurücksetzen der Datenbank gehen alle Einstellungen verloren!"
+
+msgctxt "#30138"
+msgid "Only do so if your database has become corrupt!"
+msgstr "Führen Sie diesen Schritt nur aus wenn Ihre Datenbank fehlerhaft ist!"
+
+msgctxt "#30139"
+msgid "Yes, Reset Database"
+msgstr "Ja, Datenbank zurücksetzen"
+
+#empty strings from id 30140 to 30149
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"

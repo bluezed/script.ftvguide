@@ -206,7 +206,19 @@ msgctxt "#30136"
 msgid "US/UK (Basic)"
 msgstr ""
 
-#empty strings from id 30137 to 30149
+msgctxt "#30137"
+msgid "** WARNING! ** Resetting your database will cause you to lose all settings!"
+msgstr ""
+
+msgctxt "#30138"
+msgid "Only do so if your database has become corrupt!"
+msgstr ""
+
+msgctxt "#30139"
+msgid "Yes, Reset Database"
+msgstr ""
+
+#empty strings from id 30140 to 30149
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"
