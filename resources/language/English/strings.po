@@ -218,7 +218,11 @@ msgctxt "#30139"
 msgid "Yes, Reset Database"
 msgstr ""
 
-#empty strings from id 30140 to 30149
+msgctxt "#30140"
+msgid "Reset Database"
+msgstr ""
+
+#empty strings from id 30141 to 30149
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"
