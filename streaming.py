@@ -19,8 +19,6 @@
 #
 import xbmc
 from xml.etree import ElementTree
-import urllib2
-import StringIO
 import ConfigParser
 import os
 import xbmcaddon
@@ -33,9 +31,7 @@ class StreamsService(object):
         self.addonsParser = ConfigParser.ConfigParser(dict_type=OrderedDict)
         self.addonsParser.optionxform = lambda option: option
         try:
-            data = urllib2.urlopen(path, timeout=10).read()
-            data = StringIO.StringIO(data)
-            self.addonsParser.readfp(data)
+            self.addonsParser.read(path)
         except:
             print 'unable to parse addons.ini'
 
