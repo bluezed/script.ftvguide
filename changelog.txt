@@ -35,5 +35,6 @@ Removed buggalo dependency
 some bug fixes
 
 2.0.2
+Support for custom local XMLTV files
 More skins
 Removed need to edit settings.xml when new skin is added
