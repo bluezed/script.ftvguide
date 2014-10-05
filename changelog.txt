@@ -1,4 +1,9 @@
 --------------------------
+FTV Guide - 2.0.3
+--------------------------
++ Support for custom local addons.ini file
+
+--------------------------
 FTV Guide - 2.0.2
 --------------------------
 + Support for custom local XMLTV files

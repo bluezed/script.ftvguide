@@ -25,8 +25,11 @@ import xbmcaddon
 
 
 class StreamsService(object):
-    def __init__(self):
-        path = xbmc.translatePath(os.path.join("special://profile/addon_data","script.ftvguide",'addons.ini'))
+    def __init__(self, addon):
+        if (int(addon.getSetting('addons.ini.type')) == 0):
+            path = xbmc.translatePath(os.path.join("special://profile/addon_data","script.ftvguide",'addons.ini'))
+        else:
+            path = str(addon.getSetting('addons.ini.file'))
 
         self.addonsParser = ConfigParser.ConfigParser(dict_type=OrderedDict)
         self.addonsParser.optionxform = lambda option: option

@@ -230,7 +230,19 @@ msgctxt "#30142"
 msgid "Custom File"
 msgstr ""
 
-#empty strings from id 30143 to 30149
+msgctxt "#30143"
+msgid "FTV Guide"
+msgstr ""
+
+msgctxt "#30144"
+msgid "addons.ini selection"
+msgstr ""
+
+msgctxt "#30145"
+msgid "addons.ini file"
+msgstr ""
+
+#empty strings from id 30146 to 30149
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"
