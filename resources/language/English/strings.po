@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: FTV Guide
 # Addon id: script.ftvguide
-# Addon Provider: rayw1986, bluezed
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -250,7 +250,11 @@ msgctxt "#30147"
 msgid "Custom Folder"
 msgstr ""
 
-#empty strings from id 30148 to 30149
+msgctxt "#30148"
+msgid "Appearance"
+msgstr ""
+
+#empty strings from id 30149 to 30149
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"

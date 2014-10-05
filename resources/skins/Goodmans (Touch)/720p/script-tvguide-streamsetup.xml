@@ -16,7 +16,7 @@
 		
 		<control type="image">
             <posx>900</posx>
-            <posy>80</posy>
+            <posy>75</posy>
             <width>400</width>
             <height>200</height>
             <texture>video-mask.png</texture>
