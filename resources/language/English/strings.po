@@ -242,7 +242,15 @@ msgctxt "#30145"
 msgid "addons.ini file"
 msgstr ""
 
-#empty strings from id 30146 to 30149
+msgctxt "#30146"
+msgid "Logo source"
+msgstr ""
+
+msgctxt "#30147"
+msgid "Custom Folder"
+msgstr ""
+
+#empty strings from id 30148 to 30149
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"

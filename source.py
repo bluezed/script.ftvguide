@@ -822,12 +822,19 @@ class XMLTVSource(Source):
     INTERVAL_12 = 1
     INTERVAL_24 = 2
     INTERVAL_48 = 3
+    LOGO_SOURCE_FTV = 0
+    LOGO_SOURCE_CUSTOM = 1
 
     def __init__(self, addon):
-        self.logoFolder = XMLTVSource.FTV_URL + 'logos/'
         self.xmltvType = int(addon.getSetting('xmltv.type'))
         self.xmltvInterval = int(addon.getSetting('xmltv.interval'))
         self.addonsType = int(addon.getSetting('addons.ini.type'))
+        self.logoSource = int(addon.getSetting('logos.source'))
+
+        if (self.logoSource == XMLTVSource.LOGO_SOURCE_FTV):
+            self.logoFolder = XMLTVSource.FTV_URL + 'logos/'
+        else:
+            self.logoFolder = str(addon.getSetting('logos.folder'))
 
         if (self.xmltvType == XMLTVSource.TYPE_FTV_ALL):
             self.xmltvFile = self.updateLocalFile(XMLTVSource.FTV_ALL)
@@ -949,12 +956,11 @@ class XMLTVSource(Source):
                     title = elem.findtext("display-name")
                     logo = None
                     if logoFolder:
-                        logo = os.path.join(logoFolder, title + '.png')
-                        logo = logo.replace(' ', '%20')
-                    if not logo:
-                        iconElement = elem.find("icon")
-                        if iconElement is not None:
-                            logo = iconElement.get("src")
+                        logoFile = os.path.join(logoFolder, title + '.png')
+                        if (self.logoSource == XMLTVSource.LOGO_SOURCE_FTV):
+                            logo = logoFile.replace(' ', '%20') # needed due to fetching from a server!
+                        elif xbmcvfs.exists(logoFile):
+                            logo = logoFile # local file instead of remote!
                     streamElement = elem.find("stream")
                     streamUrl = None
                     if streamElement is not None:
