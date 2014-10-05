@@ -25,4 +25,7 @@ try:
     del w
 
 except:
-    print "EXCEPTION RAISED!"
+    import sys
+    import traceback as tb
+    (etype, value, traceback) = sys.exc_info()
+    tb.print_exception(etype, value, traceback)
