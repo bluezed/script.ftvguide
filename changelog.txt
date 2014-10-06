@@ -6,6 +6,7 @@ FTV Guide - 2.0.4
 --------------------------
 FTV Guide - 2.0.3
 --------------------------
++ Even more skins
 + Support for local Channel logos folder (requires database reset!)
 + updated all headers to comply with the licence
 

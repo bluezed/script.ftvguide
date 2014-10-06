@@ -16,16 +16,16 @@
 		
 		<control type="image">
             <posx>900</posx>
-            <posy>75</posy>
+            <posy>0</posy>
             <width>400</width>
-            <height>200</height>
+            <height>250</height>
             <texture>video-mask.png</texture>
         </control>
 		<control type="image">
             <posx>900</posx>
-            <posy>80</posy>
+            <posy>0</posy>
             <width>400</width>
-            <height>200</height>
+            <height>250</height>
             <texture>video-mask.png</texture>
         </control>
 
@@ -63,8 +63,8 @@
             <font>font13</font>
             <textcolor>ffffffff</textcolor>
             <label>$ADDON[script.ftvguide 30601]</label>
-            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <texturefocus>menu-grey-focus.png</texturefocus>
+            <texturenofocus>menu-grey.png</texturenofocus>
             <onleft>103</onleft>
             <onright>102</onright>
             <ondown>1001</ondown>
@@ -79,8 +79,8 @@
             <font>font13</font>
             <textcolor>ffffffff</textcolor>
             <label>$ADDON[script.ftvguide 30602]</label>
-            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <texturefocus>menu-grey-focus.png</texturefocus>
+            <texturenofocus>menu-grey.png</texturenofocus>
             <onleft>101</onleft>
             <onright>103</onright>
             <ondown>2001</ondown>
@@ -95,8 +95,8 @@
             <font>font13</font>
             <textcolor>ffffffff</textcolor>
             <label>$ADDON[script.ftvguide 30603]</label>
-            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <texturefocus>menu-grey-focus.png</texturefocus>
+            <texturenofocus>menu-grey.png</texturenofocus>
             <onleft>102</onleft>
             <onright>101</onright>
             <ondown>3001</ondown>
@@ -136,8 +136,8 @@
                 <aligny>center</aligny>
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>101</onup>
                 <onright>1002</onright>
                 <ondown>1002</ondown>
@@ -162,8 +162,8 @@
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
                 <label>$ADDON[script.ftvguide 30604]</label>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>101</onup>
                 <onleft>1001</onleft>
                 <onright>1003</onright>
@@ -178,8 +178,8 @@
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
                 <label>$ADDON[script.ftvguide 30605]</label>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>101</onup>
                 <onleft>1002</onleft>
                 <onright>1004</onright>
@@ -194,8 +194,8 @@
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
                 <label>$ADDON[script.ftvguide 30606]</label>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>101</onup>
                 <onleft>1003</onleft>
             </control>
@@ -236,7 +236,7 @@
                         <posy>0</posy>
                         <width>560</width>
                         <height>38</height>
-                        <texture>tvguide-program-grey.png</texture>
+                        <texture>menu-grey.png</texture>
                     </control>
                     <control type="label">
                         <posx>16</posx>
@@ -255,7 +255,7 @@
                         <posy>0</posy>
                         <width>560</width>
                         <height>38</height>
-                        <texture>tvguide-program-grey.png</texture>
+                        <texture>menu-grey.png</texture>
                         <visible>!Control.HasFocus(2001)</visible>
                     </control>
                     <control type="image">
@@ -263,7 +263,7 @@
                         <posy>0</posy>
                         <width>560</width>
                         <height>38</height>
-                        <texture>tvguide-program-grey-focus.png</texture>
+                        <texture>menu-grey-focus.png</texture>
                         <visible>Control.HasFocus(2001)</visible>
                     </control>
                     <control type="label">
@@ -296,8 +296,8 @@
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
                 <label>$ADDON[script.ftvguide 30604]</label>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>102</onup>
                 <onleft>2001</onleft>
                 <onright>2003</onright>
@@ -312,8 +312,8 @@
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
                 <label>$ADDON[script.ftvguide 30605]</label>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>102</onup>
                 <onleft>2002</onleft>
                 <onright>2004</onright>
@@ -328,8 +328,8 @@
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
                 <label>$ADDON[script.ftvguide 30606]</label>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>102</onup>
                 <onleft>2003</onleft>
             </control>
@@ -378,7 +378,7 @@
                         <posy>0</posy>
                         <width>150</width>
                         <height>150</height>
-                        <texture>tvguide-program-grey.png</texture>
+                        <texture>menu-grey.png</texture>
                     </control>
                     <control type="image">
                         <posx>10</posx>
@@ -394,7 +394,7 @@
                         <posy>0</posy>
                         <width>150</width>
                         <height>150</height>
-                        <texture>tvguide-program-grey.png</texture>
+                        <texture>menu-grey.png</texture>
                         <visible>!Control.HasFocus(3001)</visible>
                     </control>
                     <control type="image">
@@ -402,7 +402,7 @@
                         <posy>0</posy>
                         <width>150</width>
                         <height>150</height>
-                        <texture>tvguide-program-grey-focus.png</texture>
+                        <texture>menu-grey-focus.png</texture>
                         <visible>Control.HasFocus(3001)</visible>
                     </control>
                     <control type="image">
@@ -450,7 +450,7 @@
                         <posy>0</posy>
                         <width>560</width>
                         <height>38</height>
-                        <texture>tvguide-program-grey.png</texture>
+                        <texture>menu-grey.png</texture>
                     </control>
                     <control type="label">
                         <posx>16</posx>
@@ -469,7 +469,7 @@
                         <posy>0</posy>
                         <width>560</width>
                         <height>38</height>
-                        <texture>tvguide-program-grey.png</texture>
+                        <texture>menu-grey.png</texture>
                         <visible>!Control.HasFocus(3002)</visible>
                     </control>
                     <control type="image">
@@ -477,7 +477,7 @@
                         <posy>0</posy>
                         <width>560</width>
                         <height>38</height>
-                        <texture>tvguide-program-grey-focus.png</texture>
+                        <texture>menu-grey-focus.png</texture>
                         <visible>Control.HasFocus(3002)</visible>
                     </control>
                     <control type="label">
@@ -510,8 +510,8 @@
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
                 <label>$ADDON[script.ftvguide 30604]</label>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>103</onup>
                 <onleft>3002</onleft>
                 <onright>3006</onright>
@@ -526,8 +526,8 @@
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
                 <label>$ADDON[script.ftvguide 30605]</label>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>103</onup>
                 <onleft>3005</onleft>
                 <onright>3007</onright>
@@ -542,8 +542,8 @@
                 <font>font13</font>
                 <textcolor>ffffffff</textcolor>
                 <label>$ADDON[script.ftvguide 30606]</label>
-                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
-                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <texturefocus>menu-grey-focus.png</texturefocus>
+                <texturenofocus>menu-grey.png</texturenofocus>
                 <onup>103</onup>
                 <onleft>3006</onleft>
             </control>
