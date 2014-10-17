@@ -1,4 +1,9 @@
 --------------------------
+FTV Guide - 2.0.5
+--------------------------
++ Support for custom local addons.ini file
+
+--------------------------
 FTV Guide - 2.0.4
 --------------------------
 + Fix for ghosting issue
