@@ -30,7 +30,7 @@ import xbmcaddon
 class StreamsService(object):
     def __init__(self, addon):
         if (int(addon.getSetting('addons.ini.type')) == 0):
-            path = xbmc.translatePath(os.path.join("special://profile/addon_data","script.ftvguide",'addons.ini'))
+            path = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.ftvguide', 'addons.ini'))
         else:
             path = str(addon.getSetting('addons.ini.file'))
 
@@ -43,7 +43,7 @@ class StreamsService(object):
 
     def loadFavourites(self):
         entries = list()
-        path = xbmc.translatePath('special://userdata/favourites.xml')
+        path = xbmc.translatePath(os.path.join('special://profile', 'favourites.xml'))
         if os.path.exists(path):
             f = open(path)
             xml = f.read()

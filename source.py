@@ -812,7 +812,7 @@ class Source(object):
 
 
 class XMLTVSource(Source):
-    PLUGIN_DATA = xbmc.translatePath(os.path.join("special://profile/addon_data","script.ftvguide"))
+    PLUGIN_DATA = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.ftvguide'))
     FTV_BASIC = 'guide_basic.xmltv'
     FTV_ALL = 'guide.xmltv'
     FTV_UKBASIC = 'guide_ukbasic.xmltv'
