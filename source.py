@@ -28,6 +28,7 @@ import urllib2
 from xml.etree import ElementTree
 
 from strings import *
+from guideTypes import *
 
 import xbmc
 import xbmcgui
@@ -813,23 +814,11 @@ class Source(object):
 
 class XMLTVSource(Source):
     PLUGIN_DATA = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.ftvguide'))
-    FTV_BASIC = 'guide_basic.xmltv'
-    FTV_ALL = 'guide.xmltv'
-    FTV_UKBASIC = 'guide_ukbasic.xmltv'
-    FTV_UKSKY = 'guide_uksky.xmltv'
-    FTV_USTV = 'guide_ustvnow.xmltv'
-    FTV_USUKBASIC = 'guide_usukbasic.xmltv'
     FTV_URL = 'http://thaisatellite.tv/ftv/'
     KEY = 'xmltv'
     INI_TYPE_FTV = 0
     INI_TYPE_CUSTOM = 1
     INI_FILE = 'addons.ini'
-    TYPE_FTV_ALL = 0
-    TYPE_FTV_BASIC = 1
-    TYPE_FTV_UKBASIC = 2
-    TYPE_FTV_UKSKY = 3
-    TYPE_FTV_USTV = 4
-    TYPE_FTV_USUKBASIC = 5
     TYPE_CUSTOM = 6
     INTERVAL_ALWAYS = 0
     INTERVAL_12 = 1
@@ -855,20 +844,10 @@ class XMLTVSource(Source):
         else:
             self.logoFolder = str(addon.getSetting('logos.folder'))
 
-        if (self.xmltvType == XMLTVSource.TYPE_FTV_ALL):
-            self.xmltvFile = self.updateLocalFile(XMLTVSource.FTV_ALL)
-        elif (self.xmltvType == XMLTVSource.TYPE_FTV_BASIC):
-            self.xmltvFile = self.updateLocalFile(XMLTVSource.FTV_BASIC)
-        elif (self.xmltvType == XMLTVSource.TYPE_FTV_UKBASIC):
-            self.xmltvFile = self.updateLocalFile(XMLTVSource.FTV_UKBASIC)
-        elif (self.xmltvType == XMLTVSource.TYPE_FTV_UKSKY):
-            self.xmltvFile = self.updateLocalFile(XMLTVSource.FTV_UKSKY)
-        elif (self.xmltvType == XMLTVSource.TYPE_FTV_USTV):
-            self.xmltvFile = self.updateLocalFile(XMLTVSource.FTV_USTV)
-        elif (self.xmltvType == XMLTVSource.TYPE_FTV_USUKBASIC):
-            self.xmltvFile = self.updateLocalFile(XMLTVSource.FTV_USUKBASIC)
-        elif (self.xmltvType == XMLTVSource.TYPE_CUSTOM):
+        if (self.xmltvType == XMLTVSource.TYPE_CUSTOM):
             self.xmltvFile = str(addon.getSetting('xmltv.file')) # uses local file provided by user!
+        else:
+            self.xmltvFile = self.updateLocalFile(getGuideFileName(self.xmltvType))
 
         # make sure the ini file is fetched as well if necessary
         if (self.addonsType == XMLTVSource.INI_TYPE_FTV):
