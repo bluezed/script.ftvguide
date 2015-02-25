@@ -819,7 +819,6 @@ class XMLTVSource(Source):
     INI_TYPE_FTV = 0
     INI_TYPE_CUSTOM = 1
     INI_FILE = 'addons.ini'
-    TYPE_CUSTOM = 6
     INTERVAL_ALWAYS = 0
     INTERVAL_12 = 1
     INTERVAL_24 = 2
@@ -844,10 +843,11 @@ class XMLTVSource(Source):
         else:
             self.logoFolder = str(addon.getSetting('logos.folder'))
 
-        if (self.xmltvType == XMLTVSource.TYPE_CUSTOM):
+        gType = GuideTypes()
+        if (self.xmltvType == gType.CUSTOM_FILE_ID):
             self.xmltvFile = str(addon.getSetting('xmltv.file')) # uses local file provided by user!
         else:
-            self.xmltvFile = self.updateLocalFile(getGuideFileName(self.xmltvType))
+            self.xmltvFile = self.updateLocalFile(gType.getGuideDataItem(self.xmltvType, gType.GUIDE_FILE))
 
         # make sure the ini file is fetched as well if necessary
         if (self.addonsType == XMLTVSource.INI_TYPE_FTV):

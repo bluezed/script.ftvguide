@@ -173,10 +173,6 @@ class TVGuide(xbmcgui.WindowXML):
                 super(TVGuide, self).close()
 
     def onInit(self):
-        if self.database:
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-            return
-
         self._hideControl(self.C_MAIN_MOUSE_CONTROLS, self.C_MAIN_OSD)
         self._showControl(self.C_MAIN_EPG, self.C_MAIN_LOADING)
         self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(BACKGROUND_UPDATE_IN_PROGRESS))
@@ -193,6 +189,10 @@ class TVGuide(xbmcgui.WindowXML):
             self.epgView.bottom = top + control.getHeight()
             self.epgView.width = control.getWidth()
             self.epgView.cellHeight = control.getHeight() / CHANNELS_PER_PAGE
+
+        if self.database:
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+            return
 
         try:
             self.database = src.Database()

@@ -1,5 +1,5 @@
 #
-#      FTV Guide
+# FTV Guide
 #      Copyright (C) 2015
 #      Thomas Geppert [bluezed] - bluezed.apps@gmail.com
 #
@@ -18,28 +18,81 @@
 #  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 #  http://www.gnu.org/copyleft/gpl.html
 #
+import xbmc
 import xbmcgui
 import xbmcaddon
+import os
+import ConfigParser
+from operator import itemgetter
 
-from strings import *
+ADDON = xbmcaddon.Addon(id='script.ftvguide')
 
-ADDON = xbmcaddon.Addon(id = 'script.ftvguide')
+class GuideTypes(object):
+    GUIDE_ID = 0
+    GUIDE_SORT = 1
+    GUIDE_NAME = 2
+    GUIDE_FILE = 3
 
-guideTypes = [(30126, 'guide.xmltv'), (30127, 'guide_basic.xmltv'), (30133, 'guide_ukbasic.xmltv'), 
-              (30134, 'guide_uksky.xmltv'), (30135, 'guide_ustvnow.xmltv'), (30136, 'guide_usukbasic.xmltv'), 
-              (30142, 'CUSTOM')]
+    CUSTOM_FILE_ID = 6
 
-def getGuideFileName(id):
-    return guideTypes[id][1]
+    guideTypes = []
+    guideParser = ConfigParser.ConfigParser()
 
-def getGuideName(id):
-    return strings(guideTypes[id][0])
+    def __init__(self):
+        xbmc.log('[script.ftvguide] INIT called', xbmc.LOGDEBUG)
+        try:
+            path = os.path.join(ADDON.getAddonInfo('path'), 'resources', 'guides.ini')
+            self.guideParser.read(path)
+            guideTypes = []
+            for section in self.guideParser.sections():
+                id = self.SectionMap(section)['id']
+                file = self.SectionMap(section)['file']
+                sortOrder = self.SectionMap(section)['sort_order']
+                guideTypes.append((id, sortOrder, section, file))
+            self.guideTypes = sorted(guideTypes, key=itemgetter(self.GUIDE_SORT))
+            xbmc.log('[script.ftvguide] GuideTypes collected: %s' % str(self.guideTypes), xbmc.LOGDEBUG)
+        except:
+            print 'unable to parse guides.ini'
+
+    def SectionMap(self, section):
+        dict1 = {}
+        options = self.guideParser.options(section)
+        for option in options:
+            try:
+                dict1[option] = self.guideParser.get(section, option)
+                if dict1[option] == -1:
+                    xbmc.log('[script.ftvguide] skip: %s' % option, xbmc.LOGDEBUG)
+            except:
+                print("exception on %s!" % option)
+                dict1[option] = None
+        return dict1
+
+    def getGuideDataItem(self, id, item):
+        value = None
+        guide = self.getGuideById(id)
+        try:
+            value = guide[item]
+        except IndexError:
+            xbmc.log('[script.ftvguide] DataItem with index %s not found' % item, xbmc.LOGDEBUG)
+        return value
+
+    def getGuideById(self, id):
+        xbmc.log('[script.ftvguide] Finding Guide with ID: %s' % id, xbmc.LOGDEBUG)
+        ret = []
+        for guide in self.guideTypes:
+            if guide[self.GUIDE_ID] == str(id):
+                ret = guide
+                xbmc.log('[script.ftvguide] Found Guide with data: %s' % str(guide), xbmc.LOGDEBUG)
+        return ret
 
 if __name__ == '__main__':
     list = []
-    for id, file in guideTypes:
-        list.append(strings(id))
+    gTypes = GuideTypes()
+    for type in gTypes.guideTypes:
+        list.append(type[gTypes.GUIDE_NAME])
     d = xbmcgui.Dialog()
     ret = d.select('Select what type of guide you want to use', list)
-    ADDON.setSetting('xmltv.type', str(ret))
-    ADDON.setSetting('xmltv.type_select', getGuideName(ret))
+    if ret >= 0:
+        guideId = gTypes.guideTypes[ret][gTypes.GUIDE_ID]
+        ADDON.setSetting('xmltv.type', str(guideId))
+        ADDON.setSetting('xmltv.type_select', gTypes.getGuideDataItem(guideId, gTypes.GUIDE_NAME))
