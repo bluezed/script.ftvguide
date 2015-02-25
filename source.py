@@ -827,6 +827,8 @@ class XMLTVSource(Source):
     LOGO_SOURCE_CUSTOM = 1
 
     def __init__(self, addon):
+        gType = GuideTypes()
+
         self.needReset = False
         self.fetchError = False
         self.xmltvType = int(addon.getSetting('xmltv.type'))
@@ -843,7 +845,6 @@ class XMLTVSource(Source):
         else:
             self.logoFolder = str(addon.getSetting('logos.folder'))
 
-        gType = GuideTypes()
         if (self.xmltvType == gType.CUSTOM_FILE_ID):
             self.xmltvFile = str(addon.getSetting('xmltv.file')) # uses local file provided by user!
         else:
