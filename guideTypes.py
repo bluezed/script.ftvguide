@@ -21,9 +21,15 @@
 import xbmc
 import xbmcgui
 import xbmcaddon
+
 import os
 import ConfigParser
+import urllib2
+import datetime
+import zlib
+
 from operator import itemgetter
+from strings import *
 
 ADDON = xbmcaddon.Addon(id='script.ftvguide')
 
@@ -37,13 +43,21 @@ class GuideTypes(object):
 
     CUSTOM_FILE_ID = 6
 
+    INTERVAL_ALWAYS = 0
+    INTERVAL_12 = 1
+    INTERVAL_24 = 2
+    INTERVAL_48 = 3
+
     guideTypes = []
     guideParser = ConfigParser.ConfigParser()
+    filePath = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.ftvguide', 'guides.ini'))
+    URL = MAIN_URL + 'guides.ini'
 
     def __init__(self):
         try:
-            path = os.path.join(ADDON.getAddonInfo('path'), 'resources', 'guides.ini')
-            self.guideParser.read(path)
+            self.fetchFile()
+
+            self.guideParser.read(self.filePath)
             guideTypes = []
             defaultGuideId = 0  # fallback to the first guide in case no default is actually set in the ini file
             for section in self.guideParser.sections():
@@ -63,6 +77,37 @@ class GuideTypes(object):
                 ADDON.setSetting('xmltv.type', str(defaultGuideId))
         except:
             print 'unable to parse guides.ini'
+
+    def fetchFile(self):
+        fetch = False
+        if not os.path.exists(self.filePath):  # always fetch if file doesn't exist!
+            fetch = True
+        else:
+            interval = int(ADDON.getSetting('xmltv.interval'))
+            if (interval <> self.INTERVAL_ALWAYS):
+                modTime = datetime.datetime.fromtimestamp(os.path.getmtime(self.filePath))
+                td = datetime.datetime.now() - modTime
+                # need to do it this way cause Android doesn't support .total_seconds() :(
+                diff = (td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6
+                if ((interval == self.INTERVAL_12 and diff >= 43200) or
+                    (interval == self.INTERVAL_24 and diff >= 86400) or
+                    (interval == self.INTERVAL_48 and diff >= 172800)):
+                    fetch = True
+
+        if fetch == True:
+            tmpFile = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.ftvguide', 'tmp'))
+            f = open(tmpFile,'wb')
+            file = urllib2.urlopen(self.URL)
+            data = file.read()
+            if file.info().get('content-encoding') == 'gzip':
+                data = zlib.decompress(data, zlib.MAX_WBITS + 16)			
+            f.write(data)
+            f.close()
+            if (os.path.getsize(tmpFile) > 256):
+                if (os.path.exists(self.filePath)):
+                    os.remove(self.filePath)
+                os.rename(tmpFile, self.filePath)
+                xbmc.log('[script.ftvguide] guides.ini downloaded', xbmc.LOGDEBUG)
 
     def SectionMap(self, section):
         dict1 = {}

@@ -190,17 +190,15 @@ class TVGuide(xbmcgui.WindowXML):
             self.epgView.width = control.getWidth()
             self.epgView.cellHeight = control.getHeight() / CHANNELS_PER_PAGE
 
-        if self.database:
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-            return
+        if not self.database:
+            try:
+                self.database = src.Database()
+            except src.SourceNotConfiguredException:
+                self.onSourceNotConfigured()
+                self.close()
+                return
+            self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
 
-        try:
-            self.database = src.Database()
-        except src.SourceNotConfiguredException:
-            self.onSourceNotConfigured()
-            self.close()
-            return
-        self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
         self.updateTimebar()
 
     def onAction(self, action):

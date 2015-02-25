@@ -25,6 +25,7 @@ import threading
 import datetime
 import time
 import urllib2
+import zlib
 from xml.etree import ElementTree
 
 from strings import *
@@ -814,7 +815,7 @@ class Source(object):
 
 class XMLTVSource(Source):
     PLUGIN_DATA = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.ftvguide'))
-    FTV_URL = 'http://thaisatellite.tv/ftv/'
+    FTV_URL = MAIN_URL
     KEY = 'xmltv'
     INI_TYPE_FTV = 0
     INI_TYPE_CUSTOM = 1
@@ -879,7 +880,11 @@ class XMLTVSource(Source):
  
         if (fetchFile):
             f = open(tmpFile,'wb')
-            f.write(urllib2.urlopen(XMLTVSource.FTV_URL + name).read())
+            file = urllib2.urlopen(XMLTVSource.FTV_URL + name)
+            data = file.read()
+            if file.info().get('content-encoding') == 'gzip':
+                data = zlib.decompress(data, zlib.MAX_WBITS + 16)			
+            f.write(data)
             f.close()
             if (os.path.getsize(tmpFile) > 1024):
                 if (os.path.exists(path)):
