@@ -1,7 +1,7 @@
 #
 # FTV Guide
 # Copyright (C) 2015
-#      Thomas Geppert [bluezed] - bluezed.apps@gmail.com
+# Thomas Geppert [bluezed] - bluezed.apps@gmail.com
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,13 +63,13 @@ class GuideTypes(object):
             for section in self.guideParser.sections():
                 sectMap = self.SectionMap(section)
                 id = int(sectMap['id'])
-                file = sectMap['file']
+                fName = sectMap['file']
                 sortOrder = int(sectMap['sort_order'])
                 default = False
                 if 'default' in sectMap and sectMap['default'] == 'true':
                     default = True
                     defaultGuideId = id
-                guideTypes.append((id, sortOrder, section, file, default))
+                guideTypes.append((id, sortOrder, section, fName, default))
             self.guideTypes = sorted(guideTypes, key=itemgetter(self.GUIDE_SORT))
             xbmc.log('[script.ftvguide] GuideTypes collected: %s' % str(self.guideTypes), xbmc.LOGDEBUG)
 
@@ -84,27 +84,29 @@ class GuideTypes(object):
             fetch = True
         else:
             interval = int(ADDON.getSetting('xmltv.interval'))
-            if (interval <> self.INTERVAL_ALWAYS):
+            if interval <> self.INTERVAL_ALWAYS:
                 modTime = datetime.datetime.fromtimestamp(os.path.getmtime(self.filePath))
                 td = datetime.datetime.now() - modTime
                 # need to do it this way cause Android doesn't support .total_seconds() :(
-                diff = (td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6
+                diff = (td.microseconds + (td.seconds + td.days * 24 * 3600) * 10 ** 6) / 10 ** 6
                 if ((interval == self.INTERVAL_12 and diff >= 43200) or
-                    (interval == self.INTERVAL_24 and diff >= 86400) or
-                    (interval == self.INTERVAL_48 and diff >= 172800)):
+                        (interval == self.INTERVAL_24 and diff >= 86400) or
+                        (interval == self.INTERVAL_48 and diff >= 172800)):
                     fetch = True
+            else:
+                fetch = True
 
-        if fetch == True:
+        if fetch:
             tmpFile = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.ftvguide', 'tmp'))
-            f = open(tmpFile,'wb')
-            file = urllib2.urlopen(self.URL)
-            data = file.read()
-            if file.info().get('content-encoding') == 'gzip':
-                data = zlib.decompress(data, zlib.MAX_WBITS + 16)			
+            f = open(tmpFile, 'wb')
+            tmpData = urllib2.urlopen(self.URL)
+            data = tmpData.read()
+            if tmpData.info().get('content-encoding') == 'gzip':
+                data = zlib.decompress(data, zlib.MAX_WBITS + 16)
             f.write(data)
             f.close()
-            if (os.path.getsize(tmpFile) > 256):
-                if (os.path.exists(self.filePath)):
+            if os.path.getsize(tmpFile) > 256:
+                if os.path.exists(self.filePath):
                     os.remove(self.filePath)
                 os.rename(tmpFile, self.filePath)
                 xbmc.log('[script.ftvguide] guides.ini downloaded', xbmc.LOGDEBUG)

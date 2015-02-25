@@ -880,9 +880,9 @@ class XMLTVSource(Source):
  
         if (fetchFile):
             f = open(tmpFile,'wb')
-            file = urllib2.urlopen(XMLTVSource.FTV_URL + name)
-            data = file.read()
-            if file.info().get('content-encoding') == 'gzip':
+            tmpData = urllib2.urlopen(XMLTVSource.FTV_URL + name)
+            data = tmpData.read()
+            if tmpData.info().get('content-encoding') == 'gzip':
                 data = zlib.decompress(data, zlib.MAX_WBITS + 16)			
             f.write(data)
             f.close()
