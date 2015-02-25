@@ -45,9 +45,9 @@ class GuideTypes(object):
             self.guideParser.read(path)
             guideTypes = []
             for section in self.guideParser.sections():
-                id = self.SectionMap(section)['id']
+                id = int(self.SectionMap(section)['id'])
                 file = self.SectionMap(section)['file']
-                sortOrder = self.SectionMap(section)['sort_order']
+                sortOrder = int(self.SectionMap(section)['sort_order'])
                 guideTypes.append((id, sortOrder, section, file))
             self.guideTypes = sorted(guideTypes, key=itemgetter(self.GUIDE_SORT))
             xbmc.log('[script.ftvguide] GuideTypes collected: %s' % str(self.guideTypes), xbmc.LOGDEBUG)
@@ -80,7 +80,7 @@ class GuideTypes(object):
         xbmc.log('[script.ftvguide] Finding Guide with ID: %s' % id, xbmc.LOGDEBUG)
         ret = []
         for guide in self.guideTypes:
-            if guide[self.GUIDE_ID] == str(id):
+            if guide[self.GUIDE_ID] == int(id):
                 ret = guide
                 xbmc.log('[script.ftvguide] Found Guide with data: %s' % str(guide), xbmc.LOGDEBUG)
         return ret

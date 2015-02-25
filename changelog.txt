@@ -1,7 +1,7 @@
 --------------------------
 FTV Guide - 2.0.12
 --------------------------
-+ Guide type selection less hard-coded now
++ Guide type selection through new ini-file
 + Bugfix - Mouse nav-bar disappearing
 
 --------------------------
