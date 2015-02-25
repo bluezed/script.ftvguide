@@ -24,8 +24,6 @@ import xbmcaddon
 
 ADDON = xbmcaddon.Addon(id = 'script.ftvguide')
 
-MAIN_URL = 'http://thaisatellite.tv/ftv/'
-
 NO_DESCRIPTION = 30000
 CALCULATING_REMAINING_TIME = 30002
 TIME_LEFT = 30003
