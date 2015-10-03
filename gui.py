@@ -119,6 +119,7 @@ class TVGuide(xbmcgui.WindowXML):
     C_MAIN_OSD_DESCRIPTION = 6003
     C_MAIN_OSD_CHANNEL_LOGO = 6004
     C_MAIN_OSD_CHANNEL_TITLE = 6005
+    C_START_TIME = 4025
 
     def __new__(cls):
         return super(TVGuide, cls).__new__(cls, 'script-tvguide-main.xml', ADDON.getAddonInfo('path'), SKIN)
@@ -422,7 +423,7 @@ class TVGuide(xbmcgui.WindowXML):
             self.close()
 
         elif buttonClicked == PopupMenu.C_POPUP_LIBMOV:
-            xbmc.executebuiltin('ActivateWindow(Videos,videodb://movies/titles/)')
+            xbmc.executebuiltin('XBMC.RunAddon(script.tvguidetecbox)')
 
         elif buttonClicked == PopupMenu.C_POPUP_LIBTV:
             xbmc.executebuiltin('ActivateWindow(Videos,videodb://tvshows/titles/)')
@@ -463,6 +464,11 @@ class TVGuide(xbmcgui.WindowXML):
                                  '[B]%s - %s[/B]' % (self.formatTime(program.startDate), self.formatTime(program.endDate)))
         else:
             self.setControlLabel(self.C_MAIN_TIME, '')
+        if program.startDate:
+            self.setControlLabel(self.C_START_TIME,
+                                 '[B]%s[/B]' % (self.formatTime(program.startDate)))
+        else:
+            self.setControlLabel(self.C_START_TIME, '')
         if program.description:
             description = program.description
         else:
