@@ -98,6 +98,7 @@ class TVGuide(xbmcgui.WindowXML):
     C_MAIN_DESCRIPTION = 4022
     C_MAIN_IMAGE = 4023
     C_MAIN_LOGO = 4024
+    C_MAIN_START_TIME = 4025
     C_MAIN_TIMEBAR = 4100
     C_MAIN_LOADING = 4200
     C_MAIN_LOADING_PROGRESS = 4201
@@ -119,7 +120,7 @@ class TVGuide(xbmcgui.WindowXML):
     C_MAIN_OSD_DESCRIPTION = 6003
     C_MAIN_OSD_CHANNEL_LOGO = 6004
     C_MAIN_OSD_CHANNEL_TITLE = 6005
-    C_START_TIME = 4025
+    C_MAIN_OSD_START_TIME = 6006
 
     def __new__(cls):
         return super(TVGuide, cls).__new__(cls, 'script-tvguide-main.xml', ADDON.getAddonInfo('path'), SKIN)
@@ -423,7 +424,7 @@ class TVGuide(xbmcgui.WindowXML):
             self.close()
 
         elif buttonClicked == PopupMenu.C_POPUP_LIBMOV:
-            xbmc.executebuiltin('XBMC.RunAddon(script.tvguidetecbox)')
+            xbmc.executebuiltin('ActivateWindow(Videos,videodb://movies/titles/)')
 
         elif buttonClicked == PopupMenu.C_POPUP_LIBTV:
             xbmc.executebuiltin('ActivateWindow(Videos,videodb://tvshows/titles/)')
@@ -465,10 +466,10 @@ class TVGuide(xbmcgui.WindowXML):
         else:
             self.setControlLabel(self.C_MAIN_TIME, '')
         if program.startDate:
-            self.setControlLabel(self.C_START_TIME,
+            self.setControlLabel(self.C_MAIN_START_TIME,
                                  '[B]%s[/B]' % (self.formatTime(program.startDate)))
         else:
-            self.setControlLabel(self.C_START_TIME, '')
+            self.setControlLabel(self.C_MAIN_START_TIME, '')
         if program.description:
             description = program.description
         else:
@@ -607,6 +608,11 @@ class TVGuide(xbmcgui.WindowXML):
                     self.formatTime(self.osdProgram.startDate), self.formatTime(self.osdProgram.endDate)))
             else:
                 self.setControlLabel(self.C_MAIN_OSD_TIME, '')
+            if self.osdProgram.startDate:
+                self.setControlLabel(self.C_MAIN_OSD_START_TIME, '[B]%s[/B]' % (
+                    self.formatTime(self.osdProgram.startDate)))
+            else:
+                self.setControlLabel(self.C_MAIN_OSD_START_TIME, '')
             self.setControlText(self.C_MAIN_OSD_DESCRIPTION, self.osdProgram.description)
             self.setControlLabel(self.C_MAIN_OSD_CHANNEL_TITLE, self.osdChannel.title)
             if self.osdProgram.channel.logo is not None:
@@ -1047,7 +1053,6 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
         else:
             self.buttonClicked = controlId
-            self.close()
 
     def onFocus(self, controlId):
         pass

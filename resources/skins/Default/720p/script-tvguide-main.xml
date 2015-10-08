@@ -62,7 +62,7 @@
                 <description>marker for EPG data view - should be hidden!</description>
                 <posx>180</posx>
                 <posy>110</posy>
-                <width>1080</width>
+                <width>1103</width>
                 <height>400</height>
                 <visible>false</visible>
             </control>
@@ -80,7 +80,7 @@
 				<posx>0</posx>
 				<posy>110</posy>
 				<width>180</width>
-				<height>399</height>
+				<height>398</height>
 				<visible>true</visible>
 				<texture>tvguide-background-left.png</texture>
 			</control>
@@ -110,9 +110,10 @@
 				<posx>1280</posx>
 				<posy>60</posy>
 				<width>-23</width>
-				<height>450</height>
+				<height>429</height>
 				<visible>true</visible>
 				<texture>tvguide-background-right.png</texture>
+				<visible>false</visible>
 			</control>
 			
 			<control type="image">
@@ -156,6 +157,7 @@
                     <width>500</width>
                     <height>100</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
 					<align>right</align>
                     <aligny>center</aligny>
@@ -168,6 +170,7 @@
                     <width>500</width>
                     <height>100</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
 					<align>right</align>
                     <aligny>center</aligny>
@@ -185,6 +188,7 @@
 					<align>center</align>
                     <aligny>center</aligny>
 					<label>CHANNELS</label>
+					<visible>false</visible>
                 </control>
 				
                 <control type="label" id="4001">
@@ -245,6 +249,7 @@
                     <width>170</width>
                     <height>50</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
@@ -258,6 +263,7 @@
                     <width>170</width>
                     <height>50</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
@@ -270,6 +276,7 @@
                     <width>170</width>
                     <height>50</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
@@ -282,6 +289,7 @@
                     <width>170</width>
                     <height>50</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
@@ -294,6 +302,7 @@
                     <width>170</width>
                     <height>50</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
@@ -306,6 +315,7 @@
                     <width>170</width>
                     <height>50</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
@@ -318,6 +328,7 @@
                     <width>170</width>
                     <height>50</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
@@ -330,6 +341,7 @@
                     <width>170</width>
                     <height>50</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
@@ -342,6 +354,7 @@
                     <width>170</width>
                     <height>50</height>
                     <textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
                     <font>font13</font>
                     <align>left</align>
                     <aligny>center</aligny>
@@ -432,37 +445,66 @@
                 </control>
             </control>
 
-            <control type="label" id="4020">
-                <description>Program title</description>
-                <posx>30</posx>
-                <posy>510</posy>
-                <width>630</width>
-                <height>50</height>
-                <textcolor>ffffffff</textcolor>
-                <font>font13</font>
-                <aligny>center</aligny>
-            </control>
-            <control type="image" id="4024">
-                <description>Channel logo</description>
-                <posx>540</posx>
-                <posy>518</posy>
-                <width>80</width>
-                <height>40</height>
-                <aspectratio>keep</aspectratio>
-                <fadetime>500</fadetime>
-                <visible>false</visible><!-- unused in default skin -->
-            </control>
-            <control type="label" id="4021">
-                <description>Program time</description>
-                <posx>900</posx>
-                <posy>510</posy>
-                <width>340</width>
-                <height>50</height>
-                <textcolor>ffffffff</textcolor>
-                <font>font13</font>
-                <align>right</align>
-                <aligny>center</aligny>
-            </control>
+            <control type="grouplist">
+			<posx>30</posx>
+            <posy>509</posy>
+            <width>875</width>
+            <orientation>horizontal</orientation>
+            <itemgap>5</itemgap>
+				<control type="label" id="4021">
+					<description>Program time</description>
+					<width min="5" max="250">auto</width>
+					<height>50</height>
+					<textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<visible>false</visible>
+				</control>
+				<control type="label" id="4025">
+					<description>Program time</description>
+					<width min="5" max="300">auto</width>
+					<height>50</height>
+					<textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="label">
+					<description>Sep</description>
+					<width min="5" max="10">auto</width>
+					<height>50</height>
+					<textcolor>ff028bb1</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<label>•</label>
+					<label>•</label>
+				</control>
+				<control type="label" id="4020">
+					<description>Program title</description>
+					<width min="5" max="580">auto</width>
+					<height>50</height>
+					<textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="image" id="4024">
+					<description>Channel logo</description>
+					<posx>540</posx>
+					<posy>515</posy>
+					<width>80</width>
+					<height>40</height>
+					<aspectratio>keep</aspectratio>
+					<fadetime>500</fadetime>
+					<visible>false</visible><!-- unused in default skin -->
+				</control>
+			</control>
             <control type="textbox" id="4022">
                 <description>Program description</description>
                 <posx>30</posx>
@@ -470,6 +512,7 @@
                 <width>850</width>
                 <height>125</height>
                 <textcolor>ffffffff</textcolor>
+				<shadowcolor>ff000000</shadowcolor>
                 <font>font13</font>
 				<align>justify</align>
                 <wrapmultiline>true</wrapmultiline>
@@ -712,57 +755,95 @@
         <control type="group">
             <description>OSD Info bar</description>
             <posx>0</posx>
-            <posy>500</posy>
+            <posy>0</posy>
             <width>1280</width>
-            <height>220</height>
+            <height>720</height>
             <visible>!Control.IsVisible(6000)</visible>
-            <animation effect="fade" start="0" end="100" time="500">VisibleChange</animation>
+            <animation effect="slide" start="0,280" end="0,0" time="300">Visible</animation>
+			<animation effect="slide" start="0,0" end="0,280" time="300">Hidden</animation>
 
             <control type="image">
                 <posx>0</posx>
                 <posy>0</posy>
                 <width>1280</width>
-                <height>220</height>
-                <texture>osd-main.png</texture>
+                <height>720</height>
+                <texture>osd.png</texture>
             </control>
 
             <!-- Program description -->
-            <control type="label" id="6001">
-                <description>Program title</description>
-                <posx>30</posx>
-                <posy>12</posy>
-                <width>850</width>
-                <height>50</height>
-                <label>[B]Title[/B]</label>
-                <textcolor>ffffffff</textcolor>
-                <font>font13</font>
-                <aligny>center</aligny>
-            </control>
-            <control type="label" id="6002">
-                <description>Program time</description>
-                <posx>1255</posx>
-                <posy>12</posy>
-                <width>240</width>
-                <height>50</height>
-                <label>[B]18:00 - 20:00[/B]</label>
-                <textcolor>ffffffff</textcolor>
-                <font>font13</font>
-                <align>right</align>
-                <aligny>center</aligny>
-            </control>
+            <control type="grouplist">
+			<posx>35</posx>
+            <posy>517</posy>
+            <width>875</width>
+            <orientation>horizontal</orientation>
+            <itemgap>5</itemgap>
+				<control type="label" id="6002">
+					<description>Program time</description>
+					<width min="5" max="250">auto</width>
+					<height>50</height>
+					<textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<visible>false</visible>
+				</control>
+				<control type="label" id="6006">
+					<description>Program time</description>
+					<width min="5" max="300">auto</width>
+					<height>50</height>
+					<textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="label">
+					<description>Sep</description>
+					<width min="5" max="10">auto</width>
+					<height>50</height>
+					<textcolor>ff028bb1</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<label>•</label>
+					<label>•</label>
+				</control>
+				<control type="label" id="6001">
+					<description>Program title</description>
+					<width min="5" max="580">auto</width>
+					<height>50</height>
+					<textcolor>ffffffff</textcolor>
+					<shadowcolor>ff000000</shadowcolor>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
             <control type="textbox" id="6003">
                 <description>Program description</description>
-                <posx>30</posx>
-                <posy>50</posy>
-                <width>1230</width>
+                <posx>35</posx>
+                <posy>570</posy>
+                <width>1210</width>
                 <height>149</height>
                 <label>Description</label>
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
                 <wrapmultiline>true</wrapmultiline>
-
                 <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
             </control>
+			<control type="label" description="Video Info">
+				<posx>1245</posx>
+                <posy>527</posy>
+				<align>right</align>
+				<width>1000</width>
+				<height>40</height>
+				<font>font13</font>
+				<textcolor>ffffffff</textcolor>
+				<shadowcolor>ff000000</shadowcolor>
+				<label>$INFO[VideoPlayer.AudioCodec,,  [COLOR ff028bb1][B]•[/B][/COLOR]  ]$VAR[LabelOSDAudioChannels,,  [COLOR ff028bb1][B]•[/B][/COLOR]  ]$INFO[VideoPlayer.VideoResolution,,p  [COLOR ff028bb1][B]•[/B][/COLOR]  ]$INFO[VideoPlayer.VideoCodec,,]</label>
+			</control>
             <control type="image" id="6004">
                 <description>Program channel logo</description>
                 <posx>1100</posx>
@@ -770,6 +851,7 @@
                 <width>160</width>
                 <height>45</height>
                 <aspectratio>keep</aspectratio>
+				<visible>false</visible>
             </control>
             <control type="label" id="6005">
                 <description>Program channel text</description>

@@ -444,6 +444,18 @@
                 <align>left</align>
                 <aligny>center</aligny>
             </control>
+			<control type="label" id="4025">
+                <description>Program time</description>
+                <posx>15</posx>
+                <posy>65</posy>
+                <width>340</width>
+                <height>50</height>
+                <textcolor>ff6c99ca</textcolor>
+                <font>font13</font>
+                <align>left</align>
+                <aligny>center</aligny>
+				<visible>false</visible>
+            </control>
             <control type="textbox" id="4022">
                 <description>Program description</description>
                 <posx>30</posx>
