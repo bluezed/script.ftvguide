@@ -240,7 +240,11 @@ class Database(object):
             self.conn.close()
 
     def _wasSettingsChanged(self, addon):
-        settingsChanged = False
+        gType = GuideTypes()
+        if int(addon.getSetting('xmltv.type')) == gType.CUSTOM_FILE_ID:
+            settingsChanged = addon.getSetting('xmltv.refresh') == 'true'
+        else:
+            settingsChanged = False
         noRows = True
         count = 0
 
