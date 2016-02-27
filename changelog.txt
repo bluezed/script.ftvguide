@@ -2,6 +2,7 @@
 FTV Guide - 2.0.19
 --------------------------
 + Added "refresh on start" setting for custom guides
++ Improved Custom Guide fetching to work with remote files
 
 --------------------------
 FTV Guide - 2.0.18
