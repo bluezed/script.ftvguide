@@ -865,6 +865,15 @@ class XMLTVSource(Source):
         # make sure the ini file is fetched as well if necessary
         if self.addonsType == XMLTVSource.INI_TYPE_FTV:
             self.updateLocalFile(XMLTVSource.INI_FILE, addon)
+        else:
+            customFile = str(addon.getSetting('addons.ini.file'))
+            if os.path.exists(customFile):
+                # uses local file provided by user!
+                xbmc.log('[script.ftvguide] Use local file: %s' % customFile, xbmc.LOGDEBUG)
+            else:
+                # Probably a remote file
+                xbmc.log('[script.ftvguide] Use remote file: %s' % customFile, xbmc.LOGDEBUG)
+                self.updateLocalFile(customFile, addon)
 
         if not self.xmltvFile or not xbmcvfs.exists(self.xmltvFile):
             raise SourceNotConfiguredException()
