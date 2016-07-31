@@ -268,6 +268,12 @@ msgstr "24 hrs"
 
 #empty strings from id 30406 to 30499
 
+msgctxt "#30450"
+msgid "Allow streaming in background"
+msgstr "Allow streaming in background"
+
+#empty strings from id 30451 to 30499
+
 msgctxt "#30500"
 msgid "[B]Edit channel order and visibility[/B]"
 msgstr "[B]Edit channel order and visibility[/B]"
