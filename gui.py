@@ -490,7 +490,7 @@ class TVGuide(xbmcgui.WindowXML):
         if ADDON.getSetting('program.background.enabled') == 'true' and program.imageLarge is not None:
             self.setControlImage(self.C_MAIN_BACKGROUND, program.imageLarge)
 
-        if not self.osdEnabled and self.player.isPlaying():
+        if self.player.isPlaying() and not self.osdEnabled and ADDON.getSetting('background.stream') == 'false':
             self.player.stop()
 
     def _left(self, currentFocus):
