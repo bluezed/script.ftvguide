@@ -99,7 +99,6 @@ class TVGuide(xbmcgui.WindowXML):
     C_MAIN_DESCRIPTION = 4022
     C_MAIN_IMAGE = 4023
     C_MAIN_LOGO = 4024
-    C_MAIN_START_TIME = 4025
     C_MAIN_TIMEBAR = 4100
     C_MAIN_LOADING = 4200
     C_MAIN_LOADING_PROGRESS = 4201
@@ -121,7 +120,6 @@ class TVGuide(xbmcgui.WindowXML):
     C_MAIN_OSD_DESCRIPTION = 6003
     C_MAIN_OSD_CHANNEL_LOGO = 6004
     C_MAIN_OSD_CHANNEL_TITLE = 6005
-    C_MAIN_OSD_START_TIME = 6006
 
     def __new__(cls):
         return super(TVGuide, cls).__new__(cls, 'script-tvguide-main.xml', ADDON.getAddonInfo('path'), SKIN)
@@ -242,7 +240,7 @@ class TVGuide(xbmcgui.WindowXML):
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
         elif action.getId() == ACTION_SELECT_ITEM:
-            if self.playChannel(self.osdChannel):
+            if self.playChannel(self.osdChannel, self.osdProgram):
                 self._hideOsd()
 
         elif action.getId() == ACTION_PAGE_UP:
@@ -375,7 +373,7 @@ class TVGuide(xbmcgui.WindowXML):
         if program is None:
             return
 
-        if not self.playChannel(program.channel):
+        if not self.playChannel(program.channel, program):
             result = self.streamingService.detectStream(program.channel)
             if not result:
                 # could not detect stream, show context menu
@@ -383,7 +381,7 @@ class TVGuide(xbmcgui.WindowXML):
             elif type(result) == str:
                 # one single stream detected, save it and start streaming
                 self.database.setCustomStreamUrl(program.channel, result)
-                self.playChannel(program.channel)
+                self.playChannel(program.channel, program)
 
             else:
                 # multiple matches, let user decide
@@ -392,7 +390,7 @@ class TVGuide(xbmcgui.WindowXML):
                 d.doModal()
                 if d.stream is not None:
                     self.database.setCustomStreamUrl(program.channel, d.stream)
-                    self.playChannel(program.channel)
+                    self.playChannel(program.channel, program)
 
     def _showContextMenu(self, program):
         self._hideControl(self.C_MAIN_MOUSE_CONTROLS)
@@ -415,7 +413,7 @@ class TVGuide(xbmcgui.WindowXML):
             del d
 
         elif buttonClicked == PopupMenu.C_POPUP_PLAY:
-            self.playChannel(program.channel)
+            self.playChannel(program.channel, program)
 
         elif buttonClicked == PopupMenu.C_POPUP_CHANNELS:
             d = ChannelsMenu(self.database)
@@ -434,6 +432,27 @@ class TVGuide(xbmcgui.WindowXML):
 
         elif buttonClicked == PopupMenu.C_POPUP_VIDEOADDONS:
             xbmc.executebuiltin('ActivateWindow(Videos,addons://sources/video/)')
+
+        elif buttonClicked == PopupMenu.C_POPUP_PLAY_BEGINNING:
+            title = program.title.replace(" ", "%20").replace(",", "").replace(u"\u2013", "-")
+            title = unicode.encode(title, "ascii", "ignore")
+            if program.is_movie == "Movie":
+                selection = 0
+            elif program.season is not None:
+                selection = 1
+            else:
+                selection = xbmcgui.Dialog().select("Choose media type", ["Search as Movie", "Search as TV Show"])
+
+            if selection == 0:
+                xbmc.executebuiltin("RunPlugin(plugin://plugin.video.meta/movies/play_by_name/%s/%s)" % (
+                    title, program.language))
+            elif selection == 1:
+                if program.season and program.episode:
+                    xbmc.executebuiltin("RunPlugin(plugin://plugin.video.meta/tv/play_by_name/%s/%s/%s/%s)" % (
+                        title, program.season, program.episode, program.language))
+                else:
+                    xbmc.executebuiltin("RunPlugin(plugin://plugin.video.meta/tv/play_by_name_only/%s/%s)" % (
+                        title, program.language))
 
     def setFocusId(self, controlId):
         control = self.getControl(controlId)
@@ -462,18 +481,18 @@ class TVGuide(xbmcgui.WindowXML):
         if program is None:
             return
 
-        self.setControlLabel(self.C_MAIN_TITLE, '[B]%s[/B]' % program.title)
+        title = '[B]%s[/B]' % program.title
+        if program.season is not None and program.episode is not None:
+            title += " [B]S%sE%s[/B]" % (program.season, program.episode)
+        if program.is_movie == "Movie":
+            title += " [B](Movie)[/B]"
+        self.setControlLabel(self.C_MAIN_TITLE, title)
         if program.startDate or program.endDate:
             self.setControlLabel(self.C_MAIN_TIME,
                                  '[B]%s - %s[/B]' % (
                                  self.formatTime(program.startDate), self.formatTime(program.endDate)))
         else:
             self.setControlLabel(self.C_MAIN_TIME, '')
-        if program.startDate:
-            self.setControlLabel(self.C_MAIN_START_TIME,
-                                 '[B]%s[/B]' % (self.formatTime(program.startDate)))
-        else:
-            self.setControlLabel(self.C_MAIN_START_TIME, '')
         if program.description:
             description = program.description
         else:
@@ -558,17 +577,23 @@ class TVGuide(xbmcgui.WindowXML):
 
     def _channelUp(self):
         channel = self.database.getNextChannel(self.currentChannel)
-        self.playChannel(channel)
+        program = self.database.getCurrentProgram(channel)
+        self.playChannel(channel, program)
 
     def _channelDown(self):
         channel = self.database.getPreviousChannel(self.currentChannel)
-        self.playChannel(channel)
+        program = self.database.getCurrentProgram(channel)
+        self.playChannel(channel, program)
 
-    def playChannel(self, channel):
+    def playChannel(self, channel, program=None):
         self.currentChannel = channel
         wasPlaying = self.player.isPlaying()
         url = self.database.getStreamUrl(channel)
         if url:
+            if str.startswith(url, "plugin://plugin.video.meta") and program is not None:
+                import urllib
+                title = urllib.quote(program.title)
+                url += "/%s/%s" % (title, program.language)
             if url[0:9] == 'plugin://':
                 if self.alternativePlayback:
                     xbmc.executebuiltin('XBMC.RunPlugin(%s)' % url)
@@ -612,11 +637,6 @@ class TVGuide(xbmcgui.WindowXML):
                     self.formatTime(self.osdProgram.startDate), self.formatTime(self.osdProgram.endDate)))
             else:
                 self.setControlLabel(self.C_MAIN_OSD_TIME, '')
-            if self.osdProgram.startDate:
-                self.setControlLabel(self.C_MAIN_OSD_START_TIME, '[B]%s[/B]' % (
-                    self.formatTime(self.osdProgram.startDate)))
-            else:
-                self.setControlLabel(self.C_MAIN_OSD_START_TIME, '')
             self.setControlText(self.C_MAIN_OSD_DESCRIPTION, self.osdProgram.description)
             self.setControlLabel(self.C_MAIN_OSD_CHANNEL_TITLE, self.osdChannel.title)
             if self.osdProgram.channel.logo is not None:
@@ -986,6 +1006,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
     C_POPUP_REMIND = 4002
     C_POPUP_CHANNELS = 4003
     C_POPUP_QUIT = 4004
+    C_POPUP_PLAY_BEGINNING = 4005
     C_POPUP_CHANNEL_LOGO = 4100
     C_POPUP_CHANNEL_TITLE = 4101
     C_POPUP_PROGRAM_TITLE = 4102
@@ -1016,6 +1037,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
         channelLogoControl = self.getControl(self.C_POPUP_CHANNEL_LOGO)
         channelTitleControl = self.getControl(self.C_POPUP_CHANNEL_TITLE)
         programTitleControl = self.getControl(self.C_POPUP_PROGRAM_TITLE)
+        programPlayBeginningControl = self.getControl(self.C_POPUP_PLAY_BEGINNING)
 
         playControl.setLabel(strings(WATCH_CHANNEL, self.program.channel.title))
         if not self.program.channel.isPlayable():
@@ -1060,6 +1082,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
         else:
             self.buttonClicked = controlId
+            self.close()
 
     def onFocus(self, controlId):
         pass
