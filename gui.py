@@ -67,6 +67,7 @@ HALF_HOUR = datetime.timedelta(minutes=30)
 
 SKIN = ADDON.getSetting('skin')
 
+
 def debug(s):
     if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
 
@@ -203,7 +204,7 @@ class TVGuide(xbmcgui.WindowXML):
                 self.close()
                 return
             self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
-            
+
         self.updateTimebar()
 
     def onAction(self, action):
@@ -351,7 +352,8 @@ class TVGuide(xbmcgui.WindowXML):
 
         if controlId == self.C_MAIN_MOUSE_HOME:
             self.viewStartDate = datetime.datetime.today()
-            self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+            self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
+                                                     seconds=self.viewStartDate.second)
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             return
         elif controlId == self.C_MAIN_MOUSE_LEFT:
@@ -429,10 +431,10 @@ class TVGuide(xbmcgui.WindowXML):
 
         elif buttonClicked == PopupMenu.C_POPUP_LIBTV:
             xbmc.executebuiltin('ActivateWindow(Videos,videodb://tvshows/titles/)')
-			
+
         elif buttonClicked == PopupMenu.C_POPUP_VIDEOADDONS:
             xbmc.executebuiltin('ActivateWindow(Videos,addons://sources/video/)')
-			
+
     def setFocusId(self, controlId):
         control = self.getControl(controlId)
         if control:
@@ -463,7 +465,8 @@ class TVGuide(xbmcgui.WindowXML):
         self.setControlLabel(self.C_MAIN_TITLE, '[B]%s[/B]' % program.title)
         if program.startDate or program.endDate:
             self.setControlLabel(self.C_MAIN_TIME,
-                                 '[B]%s - %s[/B]' % (self.formatTime(program.startDate), self.formatTime(program.endDate)))
+                                 '[B]%s - %s[/B]' % (
+                                 self.formatTime(program.startDate), self.formatTime(program.endDate)))
         else:
             self.setControlLabel(self.C_MAIN_TIME, '')
         if program.startDate:
@@ -653,7 +656,9 @@ class TVGuide(xbmcgui.WindowXML):
         self._clearEpg()
 
         try:
-            self.channelIdx, channels, programs = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, clearExistingProgramList=False)
+            self.channelIdx, channels, programs = self.database.getEPGView(channelStart, startTime,
+                                                                           self.onSourceProgressUpdate,
+                                                                           clearExistingProgramList=False)
         except src.SourceException:
             self.onEPGLoadError()
             return
@@ -868,7 +873,8 @@ class TVGuide(xbmcgui.WindowXML):
 
             if point.y < y:
                 rightEdge = leftEdge + control.getWidth()
-                if leftEdge <= point.x < rightEdge and (nearestControl is None or nearestControl.getPosition()[1] > top):
+                if leftEdge <= point.x < rightEdge and (
+                        nearestControl is None or nearestControl.getPosition()[1] > top):
                     nearestControl = control
 
         return nearestControl
@@ -882,7 +888,8 @@ class TVGuide(xbmcgui.WindowXML):
 
             if point.y > y:
                 rightEdge = leftEdge + control.getWidth()
-                if leftEdge <= point.x < rightEdge and (nearestControl is None or nearestControl.getPosition()[1] < top):
+                if leftEdge <= point.x < rightEdge and (
+                        nearestControl is None or nearestControl.getPosition()[1] < top):
                     nearestControl = control
 
         return nearestControl
@@ -985,8 +992,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
     C_POPUP_LIBMOV = 80000
     C_POPUP_LIBTV = 80001
     C_POPUP_VIDEOADDONS = 80002
-	
-	
+
     def __new__(cls, database, program, showRemind):
         return super(PopupMenu, cls).__new__(cls, 'script-tvguide-menu.xml', ADDON.getAddonInfo('path'), SKIN)
 
@@ -1078,7 +1084,7 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
         self.database = database
         self.channelList = database.getChannelList(onlyVisible=False)
         self.swapInProgress = False
-        
+
         self.selectedChannel = 0
 
     def onInit(self):
@@ -1090,7 +1096,8 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
             self.close()
             return
 
-        if self.getFocusId() == self.C_CHANNELS_LIST and action.getId() in [ACTION_PREVIOUS_MENU, KEY_CONTEXT_MENU, ACTION_LEFT]:
+        if self.getFocusId() == self.C_CHANNELS_LIST and action.getId() in [ACTION_PREVIOUS_MENU, KEY_CONTEXT_MENU,
+                                                                            ACTION_LEFT]:
             listControl = self.getControl(self.C_CHANNELS_LIST)
             idx = listControl.getSelectedPosition()
             self.selectedChannel = idx
@@ -1104,8 +1111,9 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
             self.getControl(self.C_CHANNELS_SELECTION_VISIBLE).setVisible(True)
             xbmc.sleep(350)
             self.setFocusId(self.C_CHANNELS_LIST)
-            
-        elif self.getFocusId() == self.C_CHANNELS_SELECTION and action.getId() in [ACTION_PREVIOUS_MENU, KEY_CONTEXT_MENU]:
+
+        elif self.getFocusId() == self.C_CHANNELS_SELECTION and action.getId() in [ACTION_PREVIOUS_MENU,
+                                                                                   KEY_CONTEXT_MENU]:
             listControl = self.getControl(self.C_CHANNELS_LIST)
             idx = listControl.getSelectedPosition()
             self.swapChannels(self.selectedChannel, idx)
@@ -1192,6 +1200,7 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
         xbmc.sleep(50)
         self.swapInProgress = False
 
+
 class StreamSetupDialog(xbmcgui.WindowXMLDialog):
     C_STREAM_STRM_TAB = 101
     C_STREAM_FAVOURITES_TAB = 102
@@ -1220,7 +1229,8 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
     VISIBLE_ADDONS = 'addons'
 
     def __new__(cls, database, channel):
-        return super(StreamSetupDialog, cls).__new__(cls, 'script-tvguide-streamsetup.xml', ADDON.getAddonInfo('path'), SKIN)
+        return super(StreamSetupDialog, cls).__new__(cls, 'script-tvguide-streamsetup.xml', ADDON.getAddonInfo('path'),
+                                                     SKIN)
 
     def __init__(self, database, channel):
         """
@@ -1257,7 +1267,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         items = list()
         for id in self.streamingService.getAddons():
             try:
-                addon = xbmcaddon.Addon(id) # raises Exception if addon is not installed
+                addon = xbmcaddon.Addon(id)  # raises Exception if addon is not installed
                 item = xbmcgui.ListItem(addon.getAddonInfo('name'), iconImage=addon.getAddonInfo('icon'))
                 item.setProperty('addon_id', id)
                 items.append(item)
@@ -1363,7 +1373,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         for (label, stream) in streams:
             if item.getProperty('addon_id') == "plugin.video.meta":
                 label = self.channel.title
-                stream = stream.replace("<channel>", self.channel.title.replace(" ","%20"))
+                stream = stream.replace("<channel>", self.channel.title.replace(" ", "%20"))
             item = xbmcgui.ListItem(label)
             item.setProperty('stream', stream)
             items.append(item)
@@ -1376,7 +1386,8 @@ class ChooseStreamAddonDialog(xbmcgui.WindowXMLDialog):
     C_SELECTION_LIST = 1000
 
     def __new__(cls, addons):
-        return super(ChooseStreamAddonDialog, cls).__new__(cls, 'script-tvguide-streamaddon.xml', ADDON.getAddonInfo('path'), SKIN)
+        return super(ChooseStreamAddonDialog, cls).__new__(cls, 'script-tvguide-streamaddon.xml',
+                                                           ADDON.getAddonInfo('path'), SKIN)
 
     def __init__(self, addons):
         super(ChooseStreamAddonDialog, self).__init__()
