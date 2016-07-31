@@ -1,4 +1,14 @@
 --------------------------
+FTV Guide - 2.0.23
+--------------------------
++ Merged Pull Request: Added option to allow background streaming (Thanks jakgibb)
+
+--------------------------
+FTV Guide - 2.0.22
+--------------------------
++ Merged Pull Request #5: further meta integration  (Thanks midraal)
+
+--------------------------
 FTV Guide - 2.0.21
 --------------------------
 + Merged Pull Request: add support for meta live players (Thanks midraal)
