@@ -545,18 +545,6 @@
                 <align>left</align>
                 <aligny>center</aligny>
             </control>
-			<control type="label" id="4025">
-                <description>Start time</description>
-                <posx>15</posx>
-                <posy>65</posy>
-                <width>340</width>
-                <height>50</height>
-                <textcolor>ff6c99ca</textcolor>
-                <font>font13</font>
-                <align>left</align>
-                <aligny>center</aligny>
-				<visible>false</visible>
-            </control>
             <control type="textbox" id="4022">
                 <description>Program description</description>
                 <posx>30</posx>
@@ -571,13 +559,13 @@
             </control>
             <control type="image" id="4023">
                 <description>Program logo / Source logo</description>
-                <posx>930</posx>
-                <posy>515</posy>
+                <posx>910</posx>
+                <posy>90</posy>
                 <width>320</width>
                 <height>160</height>
                 <aspectratio>keep</aspectratio>
                 <fadetime>500</fadetime>
-				<visible>false</visible>
+				<visible>true</visible>
                 <texture>tvguide-logo-epg.png</texture>
             </control>
 

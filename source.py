@@ -21,6 +21,7 @@
 #  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 #  http://www.gnu.org/copyleft/gpl.html
 #
+
 import os
 import threading
 import datetime
@@ -35,8 +36,8 @@ from fileFetcher import *
 import xbmc
 import xbmcgui
 import xbmcvfs
-import sqlite3
 import xbmcaddon
+import sqlite3
 
 SETTINGS_TO_CHECK = ['source', 'xmltv.type', 'xmltv.file', 'xmltv.url', 'xmltv.logo.folder']
 
@@ -63,7 +64,7 @@ class Channel(object):
 
 class Program(object):
     def __init__(self, channel, title, startDate, endDate, description, imageLarge=None, imageSmall=None,
-                 notificationScheduled=None, season=None, episode=None, is_movie=False, language="en"):
+                 notificationScheduled=None, season=None, episode=None, is_movie = False, language = "en"):
         """
 
         @param channel:
@@ -700,7 +701,6 @@ class Database(object):
                 c.execute('CREATE TABLE IF NOT EXISTS custom_stream_url(channel TEXT, stream_url TEXT)')
                 c.execute('CREATE TABLE version (major INTEGER, minor INTEGER, patch INTEGER)')
                 c.execute('INSERT INTO version(major, minor, patch) VALUES(1, 3, 0)')
-
                 # For caching data
                 c.execute('CREATE TABLE sources(id TEXT PRIMARY KEY, channels_updated TIMESTAMP)')
                 c.execute(
@@ -712,14 +712,11 @@ class Database(object):
                 c.execute('CREATE INDEX program_list_idx ON programs(source, channel, start_date, end_date)')
                 c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
                 c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
-
                 # For active setting
                 c.execute('CREATE TABLE settings(key TEXT PRIMARY KEY, value TEXT)')
-
                 # For notifications
                 c.execute(
                     "CREATE TABLE notifications(channel TEXT, program_title TEXT, source TEXT, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE)")
-
             if version < [1, 3, 1]:
                 # Recreate tables with FOREIGN KEYS as DEFERRABLE INITIALLY DEFERRED
                 c.execute('UPDATE version SET major=1, minor=3, patch=1')
