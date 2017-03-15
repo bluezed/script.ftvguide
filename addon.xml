@@ -63,7 +63,7 @@
 		<source>https://github.com/bluezed/FTV-Guide-Repo</source>
         <website></website>
 		<email></email>
-		<news>v2.0.24a Changes for the guide to return to correct channel and timeslot after streaming</news>
+		<news>v2.0.25 Added workaround for DST issue on Android... hopefully</news>
 		<assets>
           <icon>resources/icon.png</icon>
           <fanart>resources/fanart.jpg</fanart>
